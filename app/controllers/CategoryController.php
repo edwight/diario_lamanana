@@ -10,8 +10,8 @@ class CategoryController extends \BaseController {
 	public function index()
 	{
 		
-		$categorys = Category::all();
-		return View::make('category.index')->with('categorys', $categorys);
+		$category = Category::all();
+		return View::make('admin.category.index')->with('category', $category);
 	}
 
 
@@ -22,7 +22,7 @@ class CategoryController extends \BaseController {
 	 */
 	public function create()
 	{
-		return View::make('category.create');
+		return View::make('admin.category.create');
 	}
 
 

@@ -2,27 +2,48 @@
 <html lang="es">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes"> 
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     {{ Minify::stylesheet('/css/style.css') }}
 	</head>
 	<body>
-    <header class="header-main">
+    <header class="header-main" id="header">
+<div class="contenedor-logo">
+  <figure class="logo">
+
+  </figure>
+  <div class="publicidad"></div>
+</div>
       <div class="share-bar">
-          <div id="headermain">
-          <a href="#" class="bt-menu"></a>
+    <div class="iconos">
+      <a href="">
+        <div class="icon facebook">&#xf09a;</div>
+      </a>
+      <a href="">
+      <div class="icon twitter">&#xf099;</div>
+      </a>
+      <a href="">
+              <div class="icon google">&#xf0d5;</div>
+      </a>
+      <a href="">
+        <div class="icon rss">&#xf09e;</div>
+      </a>
+      <form id="demo-2">
+    <input class="sb-icon-search" type="search" placeholder="Search">
+    <span class="sb-icon-search"></span>
+    </form>
+    </div>
+        <div id="headermain">
+          <a href="#" class="bt-menu">&#xf0c9;</a>
           <div id="sb-search" class="sb-search">
-           {{ Form::open(array('action' => array('BusquedaController@postBusqueda'),'method' => 'POST')) }}
-           {{ Form::text('search', '', array('class' => 'sb-search-input','placeholder'=>'búsqueda por título...','id'=>'search')) }}
-            
-            <input class="sb-search-submit" type="submit" value="">
-            {{ Form::submit('Save', array('class' => 'sb-search-submit','type'=>'submit','value'=>' ')) }}
-            <span class="sb-icon-search"></span>
-          {{ Form::close() }}
+
         </div>
-        <a href="/"><figure class="logo"></figure></a>
-          </div>  
+
+          </div></div>  
         </div>
     </header>
+
+
     <nav class="nav">
     <div class="info"><p>El Diario de Mayor Circulación en Falcón </p></div>
     <ul class="nav-list">
@@ -66,35 +87,45 @@
     <!--
 		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+   <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js'></script>
 
-        <script>window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\/script>')</script>
-        <script type="text/javascript">
+    <script>window.jQuery || document.write('<script src="js/jquery-1.7.2.min.js"><\/script>')</script>
+    <script type="text/javascript">
+        window.onscroll = function() {
+            if (window.pageYOffset >= 200){
+              jQuery('.share-bar').css({position: 'fixed'});
+                $("#sb-search").addClass("logo");
+            }
+            else {
+              jQuery('.share-bar').css({position: '', right: '', top: ''});
+              $( "#sb-search" ).removeClass( "logo" )
+            }
+        }
+      </script>
+
+    <script type="text/javascript">
       $("document").ready(function(){
  
-          $(".share-bar .bt-menu").click(alerta);
+          $(".share-bar .bt-menu").click(menu);
 
-          function alerta(){
+          function menu(){
             $(".nav").toggle();
-            $(".contenedor").toggle();
-          
+            $(".contenedor").toggle();  
+            $(".contenedor-logo").toggle(); 
         }
       
       });
-    </script>    
-    {{ Minify::javascript(array('/js/masonry.min.js','/js/modernizr.custom.js','/js/craftyslide.min.js','/js/classie.js','/js/uisearch.js'), array('charset' => 'utf-8')) }}
+    </script>
 
-    @yield('index_js')
+
+    {{ Minify::javascript(array('/js/masonry.min.js','/js/modernizr.custom.js','/js/craftyslide.min.js'), array('charset' => 'utf-8')) }}
+
+    @yield('script')
     
     @yield('show_js')
  
-    <!-- ----------------search ---------------- 
-     {{ HTML::script('js/search/classie.js') }}
-     {{ HTML::script('js/search/uisearch.js') }}
-     -->
+ 
     <script src="https://platform.twitter.com/widgets.js" id="twitter-wjs" charset="utf-8" async=""></script>
-    <script>
-      new UISearch( document.getElementById( 'sb-search' ) );
-    </script>
+    
 	</body>
 </html>

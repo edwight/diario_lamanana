@@ -20,7 +20,7 @@
 					</div>
 					<div class="actions">
 						<ul>
-							<li><a class="time">{{ date("d F Y",strtotime($posts->created_at)) }} </a></li>
+							<li><a class="time">{{ $posts->getCarbonAgo($posts->created_at) }} </a></li>
 							<li><a href="/categoria/{{($posts->category->slugCategory)}}" class="category">{{$posts->category->name}}</a></li>
 						</ul>
 					</div>
@@ -40,7 +40,7 @@
 				</div>
 				<div class="actions">
 					<ul>
-						<li><a class="time">{{ date("d F Y",strtotime($posts->created_at)) }} </a></li>
+						<li><a class="time">{{ $posts->getCarbonAgo($posts->created_at) }}</a></li>
 						<li><a href="/categoria/{{$posts->category->slugCategory}}" class="category">{{$posts->category->name}}</a></li>
 					</ul>
 				</div>
@@ -58,7 +58,7 @@
 				</div>
 				<div class="actions">
 					<ul>
-						<li><a class="time">{{ date("d F Y",strtotime($posts->created_at)) }} </a></li>
+						<li><a class="time">{{ $posts->getCarbonAgo($posts->created_at) }}</a></li>
 						<li><a href="/categoria/{{$posts->category->slugCategory}}" class="category">{{$posts->category->name}}</a></li>
 					</ul>
 				</div>

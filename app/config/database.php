@@ -55,7 +55,7 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'edwight',
+			'database'  => 'lamanana_noticia_l5',
 			'username'  => 'root',
 			'password'  => '',
 			'charset'   => 'utf8',

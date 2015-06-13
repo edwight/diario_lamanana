@@ -9,8 +9,8 @@ class RevistaController extends \BaseController {
 	 */
 	public function index()
 	{
-		$revista = Revista::all();
-		return View::make('revista.index')->with('revista', $revista);
+		$revistas = Revista::all();
+		return View::make('admin.revista.index')->with('revistas', $revistas);
 	}
 
 	/**
@@ -21,7 +21,7 @@ class RevistaController extends \BaseController {
 	public function create()
 	{
 		//crear el post 
-		return View::make('revista.create');
+		return View::make('admin.revista.create');
 	}
 
 
@@ -50,7 +50,7 @@ class RevistaController extends \BaseController {
         	$hoja->titulo = $fileName;
         	$revista = Revista::where('titulo',$time)->orderBy('id', 'desc')->first();
         	$revista->hojas()->save($hoja);
-        	return Response::json('success', 200);
+        	return Redirect::to('admin/edicion');
 		}
 		else
 		{	
@@ -60,7 +60,7 @@ class RevistaController extends \BaseController {
         	$hoja->titulo = $fileName;
         	$revista = Revista::where('titulo',$time)->orderBy('id', 'desc')->first();
         	$revista->hojas()->save($hoja);
-        	return Response::json('success', 200);
+        	return Redirect::to('admin/edicion');
         	//$revista->hojas()->save($hoja);
         	//return Response::json(array('filelink' => '/imgs/revista/'. $fileName));
 		}
@@ -80,10 +80,10 @@ class RevistaController extends \BaseController {
 	public function show($id)
 	{
 		//admin/1
-		$revista = Revista::find($id);
+		$revistas = Revista::find($id);
 		//return $revista;
 		//return View::make('revista.edit');
-		return View::make('revista.show')->with('revista', $revista);
+		return View::make('admin.revista.show')->with('revistas', $revistas);
 	}
 
 
@@ -98,7 +98,7 @@ class RevistaController extends \BaseController {
 		$hojas = Hoja::find($id);
 		//return $revista;
 		//return View::make('revista.edit');
-		return View::make('revista.edit')->with('hojas', $hojas);
+		return View::make('admin.revista.edit')->with('hojas', $hojas);
 	}
 
 

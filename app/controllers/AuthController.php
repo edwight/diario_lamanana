@@ -7,9 +7,14 @@ class AuthController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function login()
+	public function showLogin()
 	{
-		//login
+		if (Auth::check())
+        {
+           // Si tenemos sesión activa mostrará la página de inicio
+           return Redirect::to('/');
+        }
+        // Si no hay sesión activa mostramos el formulario
 		return View::make('auth.login');
 	}
 
@@ -22,31 +27,28 @@ class AuthController extends \BaseController {
 	public function postLogin()
 	{	
 		//
-		 $credentials = array(
+		 $data = [
  		'email' => Input::get('email'),
- 		'password' => Input::get('password')
- 		);
- 		
-		try
-	 	{	
-	 		//return $credentials;
-		 	$user = Sentry::authenticate($credentials, false);
-		 	if($user)
-			 {	
-			 	//return $user;
-			 	return Redirect::to('admin');
-			 }
-	 	}
-	 	catch(\Exception $e)
-	 	{
-		 	return Redirect::to('login')
-		 	->withErrors(array('login' => $e->getMessage()));
-		}
-	}
-	public function logout()
+ 		'password' => Input::get('password'),
+ 		'type' => 'admin',
+ 		];
+
+ 		// Verificamos los datos
+ 		if (Auth::attempt($data, Input::get('remember')))// Como segundo parámetro pasámos el checkbox para sabes si queremos recordar la contraseña
+
+ 		{	
+ 			 // Si nuestros datos son correctos mostramos la página de inicio
+ 			 return Redirect::intended('admin');
+ 		}
+ 		 // Si los datos no son los correctos volvemos al login y mostramos un error
+        return Redirect::back()->with('error_message', 'Invalid data')->withInput();
+    }
+
+	public function logOut()
 	{
-		//logout
-		Sentry::logout();
-		return Redirect::to('/');
-	}
+		// Cerramos la sesión
+        Auth::logout();
+        // Volvemos al login y mostramos un mensaje indicando que se cerró la sesión
+        return Redirect::to('lv-login')->with('error_message', 'Logged out correctly');
+    }
 }

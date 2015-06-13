@@ -492,16 +492,16 @@
         },
         {
             "name": "imagecow/imagecow",
-            "version": "v1.3.0",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/oscarotero/imagecow.git",
-                "reference": "e81d4c01358a2f9a3b3afce3bad9bb5be1fe3fdf"
+                "reference": "4f42a900d021079ff5f5a33dc6aa82f0535f405f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/oscarotero/imagecow/zipball/e81d4c01358a2f9a3b3afce3bad9bb5be1fe3fdf",
-                "reference": "e81d4c01358a2f9a3b3afce3bad9bb5be1fe3fdf",
+                "url": "https://api.github.com/repos/oscarotero/imagecow/zipball/4f42a900d021079ff5f5a33dc6aa82f0535f405f",
+                "reference": "4f42a900d021079ff5f5a33dc6aa82f0535f405f",
                 "shasum": ""
             },
             "require": {
@@ -530,7 +530,7 @@
             "keywords": [
                 "image"
             ],
-            "time": "2015-03-25 16:08:56"
+            "time": "2015-04-30 08:48:36"
         },
         {
             "name": "ircmaxell/password-compat",
@@ -792,12 +792,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "d84ba2cb20186688230a5a11f76a70e97fe2f886"
+                "reference": "97af2c72727fc1cf15bc3bdfe8cf87b09ea5b9ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/d84ba2cb20186688230a5a11f76a70e97fe2f886",
-                "reference": "d84ba2cb20186688230a5a11f76a70e97fe2f886",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/97af2c72727fc1cf15bc3bdfe8cf87b09ea5b9ba",
+                "reference": "97af2c72727fc1cf15bc3bdfe8cf87b09ea5b9ba",
                 "shasum": ""
             },
             "require": {
@@ -859,7 +859,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2015-04-25 10:55:55"
+            "time": "2015-05-02 13:35:36"
         },
         {
             "name": "natxet/CssMin",
@@ -867,12 +867,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/natxet/CssMin.git",
-                "reference": "2feb2aa71c5b299369c63ecc256185aaa5c05bcf"
+                "reference": "692edd815395b43ff3a77e244972d65f6b3ad1a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/natxet/CssMin/zipball/2feb2aa71c5b299369c63ecc256185aaa5c05bcf",
-                "reference": "2feb2aa71c5b299369c63ecc256185aaa5c05bcf",
+                "url": "https://api.github.com/repos/natxet/CssMin/zipball/692edd815395b43ff3a77e244972d65f6b3ad1a1",
+                "reference": "692edd815395b43ff3a77e244972d65f6b3ad1a1",
                 "shasum": ""
             },
             "require": {
@@ -906,7 +906,7 @@
                 "css",
                 "minify"
             ],
-            "time": "2015-01-21 10:40:33"
+            "time": "2015-04-30 15:37:42"
         },
         {
             "name": "nesbot/carbon",

@@ -630,18 +630,18 @@
         "source": {
             "type": "git",
             "url": "https://github.com/natxet/CssMin.git",
-            "reference": "2feb2aa71c5b299369c63ecc256185aaa5c05bcf"
+            "reference": "692edd815395b43ff3a77e244972d65f6b3ad1a1"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/natxet/CssMin/zipball/2feb2aa71c5b299369c63ecc256185aaa5c05bcf",
-            "reference": "2feb2aa71c5b299369c63ecc256185aaa5c05bcf",
+            "url": "https://api.github.com/repos/natxet/CssMin/zipball/692edd815395b43ff3a77e244972d65f6b3ad1a1",
+            "reference": "692edd815395b43ff3a77e244972d65f6b3ad1a1",
             "shasum": ""
         },
         "require": {
             "php": ">=5.0"
         },
-        "time": "2015-01-21 10:40:33",
+        "time": "2015-04-30 15:37:42",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1580,62 +1580,18 @@
         ]
     },
     {
-        "name": "imagecow/imagecow",
-        "version": "v1.3.0",
-        "version_normalized": "1.3.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/oscarotero/imagecow.git",
-            "reference": "e81d4c01358a2f9a3b3afce3bad9bb5be1fe3fdf"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/oscarotero/imagecow/zipball/e81d4c01358a2f9a3b3afce3bad9bb5be1fe3fdf",
-            "reference": "e81d4c01358a2f9a3b3afce3bad9bb5be1fe3fdf",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.0"
-        },
-        "time": "2015-03-25 16:08:56",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Imagecow\\": "src"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Oscar Otero",
-                "email": "oom@oscarotero.com",
-                "homepage": "http://oscarotero.com",
-                "role": "Developer"
-            }
-        ],
-        "description": "PHP library to manipulate and generate responsive images",
-        "homepage": "https://github.com/oscarotero/imagecow/",
-        "keywords": [
-            "image"
-        ]
-    },
-    {
         "name": "monolog/monolog",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/Seldaek/monolog.git",
-            "reference": "d84ba2cb20186688230a5a11f76a70e97fe2f886"
+            "reference": "97af2c72727fc1cf15bc3bdfe8cf87b09ea5b9ba"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/Seldaek/monolog/zipball/d84ba2cb20186688230a5a11f76a70e97fe2f886",
-            "reference": "d84ba2cb20186688230a5a11f76a70e97fe2f886",
+            "url": "https://api.github.com/repos/Seldaek/monolog/zipball/97af2c72727fc1cf15bc3bdfe8cf87b09ea5b9ba",
+            "reference": "97af2c72727fc1cf15bc3bdfe8cf87b09ea5b9ba",
             "shasum": ""
         },
         "require": {
@@ -1668,7 +1624,7 @@
             "ruflin/elastica": "Allow sending log messages to an Elastic Search server",
             "videlalvaro/php-amqplib": "Allow sending log messages to an AMQP server using php-amqplib"
         },
-        "time": "2015-04-25 10:55:55",
+        "time": "2015-05-02 13:35:36",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -2249,6 +2205,50 @@
         "keywords": [
             "framework",
             "laravel"
+        ]
+    },
+    {
+        "name": "imagecow/imagecow",
+        "version": "v1.3.1",
+        "version_normalized": "1.3.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/oscarotero/imagecow.git",
+            "reference": "4f42a900d021079ff5f5a33dc6aa82f0535f405f"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/oscarotero/imagecow/zipball/4f42a900d021079ff5f5a33dc6aa82f0535f405f",
+            "reference": "4f42a900d021079ff5f5a33dc6aa82f0535f405f",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2015-04-30 08:48:36",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Imagecow\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Oscar Otero",
+                "email": "oom@oscarotero.com",
+                "homepage": "http://oscarotero.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "PHP library to manipulate and generate responsive images",
+        "homepage": "https://github.com/oscarotero/imagecow/",
+        "keywords": [
+            "image"
         ]
     }
 ]

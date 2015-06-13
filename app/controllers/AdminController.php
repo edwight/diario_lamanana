@@ -9,10 +9,10 @@ class AdminController extends \BaseController {
 	 */
 	public function index()
 	{
-		$post = Post::orderBy('id', 'desc')->paginate(9);
+		$post = Post::with('user','category','contenido','img')->orderBy('id', 'desc')->paginate(9);
 		//mostrar la lista de post
-		$tags = Tag::all();
-		return View::make('admin.index', array('post'=>$post,'tags'=>$tags));
+		//$tags = Tag::all();
+		return View::make('admin.post.index', array('post'=>$post));
 	}
 
 
@@ -23,9 +23,13 @@ class AdminController extends \BaseController {
 	 */
 	public function create()
 	{
+
 		//crear el post 
 		$user = User::find(1);
-		return View::make('admin.create')->with('user', $user);
+		$userlist = User::all();
+		$categorylist = Category::all();
+		$tagslist = Tag::all();
+		return View::make('admin.post.create', array('user'=>$user,'userlist'=>$userlist,'categorylist'=>$categorylist,'tagslist'=>$tagslist));
 	}
 
 
@@ -79,33 +83,37 @@ class AdminController extends \BaseController {
     	else
     	{
 
-        	//'Datos Validos!';
-        	$editor = Input::get('editor');
-        	$subtitulo = Input::get('subtitulo');
-        	$descripcion = Input::get('descripcion');
-        	$titulo = Input::get('titulo');
-        	$category = Input::get('categorys');
-        	$primeras = Input::get('primeras');
+        	
 			//$user = Sentry::getUser();
 			//$userId = $user->id;
 			//insertar Post
-			$users = User::find($editor);
+			$primeras = Input::get('primeras');
 			$post = new Post;
-			$post->subtitulo = $subtitulo;
+			$titulo = Input::get('titulo');
 			$post->titulo = $titulo;
-			//$post->slugPost = str_replace(' ','-',$titulo);
 			$post->slugPost = Str::slug($titulo);
-			$post->descripcion = $descripcion;
 			$post->primeras = $primeras;
-			$post->contenido = Input::get('contenido');
+			$post->save();
+			
+			$contenido = New Contenido();
+			$contenido->subtitulo = Input::get('subtitulo');
+			$contenido->contenido = Input::get('contenido');
+			$contenido->descripcion = Input::get('descripcion');
+			$post->contenido()->save($contenido);
+
 			//$post->category()->name = $category;
 			//$post->slug = Input::get('url');
-
-			//insertar categoria
+			
+		
+			$editor = Input::get('editor');
+			$users = User::find($editor);
 			$users->post()->save($post);
+			//insertar categoria
+			$category = Input::get('categorys');
 			$categorys = Category::find($category);
 			$categorys->posts()->save($post);
-			//insertar categoria
+			
+
 			/*if (isset($category)) {
 				
 					$categorys = Category::find($category);
@@ -113,26 +121,25 @@ class AdminController extends \BaseController {
 				
 			} */
 			//insertar tags
+
 			$tag=Input::get('tags');
-			if (isset($tag)) {
-				foreach ($tag as $tagId) {
+			if (isset($tag)) 
+			{
+				foreach ($tag as $tagId) 
+				{
 					$tags = Tag::find($tagId);
 					$post->tags()->attach($tags);
 				}
 			}
-			//$post->slug = Input::get('url');
-
-			//$date = date('Y-m-d');
-			$date = time();
-			//insertar image
 			$file = Input::file("imagen");
-		
+	
 			if (!empty($file))
 			{
 				//return "definida";
-				$filename = $date.'__'.$file->getClientOriginalName();
-				$extension = File::extension($filename);
-				$filename = Str::slug($filename);
+				$date = time();
+				$fileName = $date. '_' . $file->getClientOriginalName();
+				$extension = File::extension($fileName);
+				$filename = Str::slug($fileName);
 				$filename = $filename.'.'.$extension;
 				//return $fileSize = $filename->getClientSize();
 				//$start_day = date("d-m-Y", strtotime($start_day_old));
@@ -141,12 +148,12 @@ class AdminController extends \BaseController {
 
 				$Imgfile   =   new Img;
 				$Imgfile->imagen = $filename;
-				$post->img()->save($Imgfile);	
+				$post->img()->save($Imgfile);
+
 			}
 		
-			return Redirect::to('admin');
+			return Redirect::to('admin/posts');
     	}
-    	
 	}
 
 
@@ -159,8 +166,8 @@ class AdminController extends \BaseController {
 	public function show($id)
 	{
 		//admin/1
-		$post = Post::find($id);
-		return View::make('admin.show')->with('post',$post);
+		$post = Post::findOrFail($id);
+		return View::make('admin.post.show')->with('post',$post);
 	}
 
 
@@ -173,8 +180,11 @@ class AdminController extends \BaseController {
 	public function edit($id)
 	{
 		//editar un post /admin/1/edit
-		$post = Post::find($id);
-		return View::make('admin.edit')->with('post', $post);
+		$post = Post::findOrFail($id);
+		$userlist = User::all();
+		$categorylist = Category::all();
+		$tagslist = Tag::all();
+		return View::make('admin.post.edit',compact('post','userlist','categorylist','tagslist'));
 	}
 
 
@@ -186,78 +196,7 @@ class AdminController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//'Datos Validos!';
-    	$editor = Input::get('editor');
-    	$subtitulo = Input::get('subtitulo');
-    	$descripcion = Input::get('descripcion');
-    	$titulo = Input::get('titulo');
-
-    	$category = Input::get('categorys');
-    	$contenido = Input::get('contenido');
-
-		//$user = Sentry::getUser();
-		//$userId = $user->id;
-		//insertar Post
-		$users = User::find($editor);
-		$post = Post::find($id);
-
-		$post->titulo = $titulo;
-		$post->subtitulo = $subtitulo;
-		//$post->slugPost = str_replace(' ','-',$titulo);
-		$post->slugPost = Str::slug($titulo);
-		$post->descripcion = $descripcion;
-		$post->contenido = $contenido;
 		
-		//guardar 
-		
-		$users->post()->save($post);
-		$categorys = Category::find($category);
-		$categorys->posts()->save($post);
-		$date = date('Y-m-d');
-		//insertar image
-		$file = Input::file("imagen");
-		if (!empty($file))
-		{
-			
-			$imgs = DB::table('imgs')->where('post_id','=', $id)->first();
-			if($imgs)
-			{
-				//return $imgs->imagen;
-				//$imgs = Img::where('post_id', '==', $id);
-
-				$ruta = public_path().'/public/imgs/post/'.$imgs->imagen;
-				if (File::exists($ruta)) 
-				{
-    				File::delete($ruta);
-				}
-				DB::table('imgs')->where('post_id','=', $id)->delete();
-				//$filename = public_path().'public/imgs/post/foo.bar';
-				$filename = $date.'__'.$file->getClientOriginalName();
-			//return $fileSize = $filename->getClientSize();
-			//$start_day = date("d-m-Y", strtotime($start_day_old));
-			//$filename = $file->getClientOriginalName();
-				$file->move('public/imgs/post', $filename);
-
-				//$Imgfile = Img::where('post_id', '==', $id);
-				$Imgfile   =   new Img;
-				$Imgfile->imagen = $filename;
-				$post->img()->save($Imgfile);
-			}
-			else
-			{
-				
-				$filename = $date.'__'.$file->getClientOriginalName();
-				$file->move('public/imgs/post', $filename);
-
-				$Imgfile   =   new Img;
-				$Imgfile->imagen = $filename;
-				$post->img()->save($Imgfile);	
-			}	
-			
-		}
-
-		return Redirect::to('admin');
-
 
 	}
 
@@ -271,27 +210,6 @@ class AdminController extends \BaseController {
 	public function destroy($id)
 	{
 		//eliminar un post 
-		$post = Post::find($id);
-		$imgs = DB::table('imgs')->where('post_id','=', $id)->first();
-		if ($imgs) 
-		{
-		$ruta = 'public/imgs/post/'.$imgs->imagen;
-		if (File::exists($ruta)) 
-		{
-			File::delete($ruta);
-		}
-		$post->delete();
-		Session::flash('message', 'Successfully deleted the nerd!');
-        return Redirect::to('admin');
-		}
-		else
-		{
-			$post->delete();
-			Session::flash('message', 'Successfully deleted the nerd!');
-        	return Redirect::to('admin');
-		}	
-			
 	}
-
 
 }

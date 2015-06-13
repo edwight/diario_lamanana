@@ -15,7 +15,8 @@ class TagsController extends \BaseController {
     	return $tag;
 		return View::make('tags.index')->with('tag', $tag);
 		*/
-		return "index tags";
+		$tag = Tag::all();
+		return View::make('admin.tags.index', compact('tag'));
 	}
 
 
@@ -26,7 +27,7 @@ class TagsController extends \BaseController {
 	 */
 	public function create()
 	{
-		return View::make('tags.create');
+		return View::make('admin.tags.create');
 	}
 
 

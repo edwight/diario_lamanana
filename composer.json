@@ -8,6 +8,7 @@
 		"kevbaldwyn/image": "2.0.3",
 		"cartalyst/sentry": "2.0.*",
 		"nesbot/carbon": "~1.14",
+		"laravelrus/localized-carbon": "1.4*",
 		"enyo/dropzone": "dev-master",
 		"ceesvanegmond/minify": "2.0.13"
 		

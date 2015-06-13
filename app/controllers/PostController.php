@@ -31,11 +31,40 @@ class PostController extends \BaseController {
 		//use Carbon\Carbon;
 
     	//return("Now: %s", Carbon::now());
-    	
+    	$yesterday = Carbon::now()->yesterday();
+
+    	//return $hora = $rr->getCarbonAgo($rr->updated_at);
+    	//return Carbon::now()->subDays($hora)->diffForHumans();
+
 		$chica = ChicaHot::orderBy('id', 'desc')->first();
 		$revista = Revista::orderBy('id', 'desc')->first();
-		$post = Post::orderBy('id', 'desc')->where('updated_at','>=', Carbon::now())->paginate(9);
+		$date = Post::orderBy('id', 'desc')->select('updated_at')->first();
+		//$fecha = Carbon::createFromFormat('Y-m-d', '2012-10-17')->format('d');
+		//$fecha = DateTime::createFromFormat('d', '2012-10-17');
+		//return Carbon::now()->day;
+		$post = Post::orderBy('id', 'desc')->paginate(9);
 		return View::make('post.index', array('post'=>$post,'primera'=>$primera,'chica'=>$chica,'revista'=>$revista));
+		/**
+		$date=date_create($date->updated_at);
+		if(date_format($date,"d") < Carbon::now()->yesterday()->day){
+			//return 'ayer';
+			$post = Post::orderBy('id', 'desc')->take(20)->paginate(9);
+			return View::make('post.index', array('post'=>$post,'primera'=>$primera,'chica'=>$chica,'revista'=>$revista));
+		}
+		if(date_format($date,"d") >= Carbon::now()->yesterday()->day){
+			//return 'hoy-ayer';
+			$post = Post::orderBy('id', 'desc')->where('updated_at','>=', $yesterday)->paginate(9);
+			return View::make('post.index', array('post'=>$post,'primera'=>$primera,'chica'=>$chica,'revista'=>$revista));
+		}
+		if(date_format($date,"d") >= Carbon::now()->day){
+			//return 'hoy-hoy';
+			$post = Post::orderBy('id', 'desc')->where('updated_at','>=', $yesterday)->paginate(9);
+			return View::make('post.index', array('post'=>$post,'primera'=>$primera,'chica'=>$chica,'revista'=>$revista));
+			
+		}
+			
+		**/
+		
 	}
 
 

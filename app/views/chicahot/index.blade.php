@@ -67,7 +67,7 @@
 	<!--Demo styles (you can delete this block)-->
 	
 	<ul id="demo-block">
-		<li><a href="/"><img src="http://localhost:8000/chicahot/img/chicahot.png"/></a></li>
+		<li><a href="/"><img src="{{ asset('/chicahot/img/chicahot.png') }}"/></a></li>
 	</ul>
 	
 	<!--End of styles-->
@@ -94,7 +94,7 @@
 	<div id="controls-wrapper" class="load-item">
 		<div id="controls">
 			
-			<a id="play-button"><img id="pauseplay" src='http://localhost:8000/chicahot/img/pause.png'/></a>
+			<a id="play-button"><img id="pauseplay" src="{{ asset('/chicahot/img/pause.png') }}"/></a>
 		
 			<!--Slide counter-->
 			<div id="slidecounter">
@@ -106,7 +106,7 @@
 			
 			<!--Thumb Tray button-->
 			
-			<a id="tray-button"><img id='tray-arrow' src='http://localhost:8000/chicahot/img/button-tray-up.png'/></a>
+			<a id="tray-button"><img id='tray-arrow' src="{{ asset('/chicahot/img/button-tray-up.png') }}"/></a>
 			<!--Navigation-->
 			<ul id="slide-list"></ul>
 			

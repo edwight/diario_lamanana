@@ -10,11 +10,13 @@ class UserController extends \BaseController {
 	 */
 	public function index()
 	{	
+		$name = Input::get('name');
+		//$user = User::name($name);
 		//lista de usuario
 		$user=User::all();
 		//$user = Sentry::findAllUsers();
 		//return Sentry::getUser();
-		return View::make('user.index', array('user'=>$user));
+		return View::make('admin.user.index', array('user'=>$user));
 	}
 
 
@@ -30,7 +32,7 @@ class UserController extends \BaseController {
 			//$users = Sentry::findAllUsersWithAccess(array('admin', 'other'));
 		//nuevo usuario
 		//lista de usuario
-		return View::make('user.create');
+		return View::make('admin.user.create');
 	}
 
 
@@ -41,51 +43,30 @@ class UserController extends \BaseController {
 	 */
 	public function store()
 	{
-		try
-		{
-		    // Create the user
-		    
-		    //$id = Sentry::getUser()->id;
-		    //return $id;
-		    //$user = User::find($id);
-		    
-		    //return $user = Sentry::getUser();
-		    $user = Sentry::createUser(array(
-		    	'first_name'  => Input::get('first_name'),
-		    	'last_name'   => Input::get('last_name'),
-		        'email'       => Input::get('email'),
-		        'password'    => Input::get('password'),
-		        'activated'   => true,
-		        'permissions' => array(
-		            'admin'   =>  Input::get('admin'),
-		            'editor'  => Input::get('editor'),
-		            'user'    => Input::get('user'),
-		        ),
-		    )); 
-		    $file = Input::file("photos");
-		    $fileName = $file->getClientOriginalName();
+		$user = New User();
+		$nombre = Input::get('nombre');
+		$user->name = $nombre;
+		$user->slugUser = Str::slug($nombre);
+		$user->email = Input::get('email');
+		$user->password = Input::get('password');
+		$user->type = Input::get('type');
+		$user->save();
 
-		    $perfil = new Perfil;
-		    $perfil->photo = $fileName;
-		    $user->perfil()->save($perfil);
-		    if($perfil->save())
-		    {
-		    	$file->move('public/imgs/user', $fileName);
-		    } 
-		    return Redirect::to('admin/users');
-		}
-		catch (Cartalyst\Sentry\Users\LoginRequiredException $e)
+		$photo = Input::file('photo');
+		if (!empty($photo))
 		{
-		    echo 'Login field is required.';
-		}
-		catch (Cartalyst\Sentry\Users\PasswordRequiredException $e)
-		{
-		    echo 'Password field is required.';
-		}
-		catch (Cartalyst\Sentry\Users\UserExistsException $e)
-		{
-		    echo 'User with this login already exists.';
-		}
+			$fileName = $photo->getClientOriginalName();
+			$filename = Str::slug($fileName).'.'.$photo->getClientOriginalExtension();
+		    $photo->move('public/imgs/users', $filename);
+
+			
+    	}
+
+		$perfile = New Perfil();
+		$perfile->descripcion = Input::get('descripcion');
+		$perfile->photo = $filename;
+		$user->Perfil()->save($perfile);
+		return Redirect::to('admin/users');
 	}
 
 
@@ -99,7 +80,7 @@ class UserController extends \BaseController {
 	{
 		//detalles del usuario 
 		$user = User::find($id);
-		return View::make('user.show')->with('user', $user);
+		return View::make('admin.user.show')->with('user', $user);
 	}
 
 
@@ -114,7 +95,7 @@ class UserController extends \BaseController {
 
 		//modificar usuario users/1/edit
 		$user = User::find($id);
-		return View::make('user.edit')->with('user', $user);
+		return View::make('admin.user.edit')->with('user', $user);
 
 	}
 
@@ -129,17 +110,55 @@ class UserController extends \BaseController {
 	{
 		//validacion 
 		//store 
-        $user = User::find($id);
-        $post->titulo = Input::get('titulo');
-        $post->contenido = Input::get('contenido');
-        $post->save();
+        $user = User::findOrFail($id);
+		$nombre = Input::get('nombre');
+		$user->name = $nombre;
+		$user->slugUser = Str::slug($nombre);
+		$user->email = Input::get('email');
+		$user->password = Input::get('password');
+		$user->type = Input::get('type');
+		$user->save();
 
-        // redirect
-        Session::flash('message', 'Successfully updated!');
-        //si validacion es incorrecta
-        //return Redirect::route('admin.edit', $id)->withInput();
-        return Redirect::to('users');
+		$photo = Input::file('photo');
+		
+		if (empty($photo))
+		{
+			$fileName = $photo->getClientOriginalName();
+			$filename = Str::slug($fileName).'.'.File::extension($fileName);
+		    $photo->move('public/imgs/users', $filename);
+			
+			$perfile = Perfil::where('user_id','=', $id)->first();
+			if(!empty($perfile)){
+				$perfile->descripcion = Input::get('descripcion');
+				$perfile->photo = $filename;
+				$user->Perfil()->save($perfile);
+			}
+			else
+			{	
+				$perfile = New Perfil();
+				$perfile->descripcion = Input::get('descripcion');
+				$perfile->photo = $filename;
+				$user->Perfil()->save($perfile);
+			}
+		}
+		else
+		{
+			$perfile = Perfil::where('user_id','=', $id)->first();
+			if(!empty($perfile)){
+				$perfile->descripcion = Input::get('descripcion');
+				$user->Perfil()->save($perfile);
+			}
+			else
+			{	
+				$perfile = New Perfil();
+				$perfile->descripcion = Input::get('descripcion');
+				$user->Perfil()->save($perfile);
+			}
+		}
+	return Redirect::to('admin/users');
+
 	}
+
 
 
 	/**
@@ -151,18 +170,10 @@ class UserController extends \BaseController {
 	public function destroy($id)
 	{
 		//eliminar usuario 
-		$user = User::find($id);
-		$filename = public_path().'public/imgs/user/'.$user->perfil->photo;
-
-		if (File::exists($filename)) 
-		{
-    		File::delete($filename);
-    		User::destroy($id);
-    		return Redirect::to('admin/users');
-		}
-		else{
-				return Redirect::to('admin/users') ->withErrors('no se pudo eliminar usuario');
-			}
+		
+		//$filename = 'public/imgs/users/'.$user->perfil->photo;
+    	User::destroy($id);
+		return Redirect::to('admin/users');
 	}
 
 

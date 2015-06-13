@@ -9,8 +9,8 @@ class ChicahotController extends \BaseController {
 	 */
 	public function index()
 	{	
-		$hot = Chicahot::orderBy('id','DESC')->take(18)->get();
-		return View::make('chicahot.index')->with('hot', $hot);
+		$chica = Chicahot::orderBy('id','DESC')->take(18)->get();
+		return View::make('admin.chica.index')->with('chica', $chica);
 	}
 
 	public function create()
@@ -18,7 +18,7 @@ class ChicahotController extends \BaseController {
 		//$hot = Chicahot::all();
 		//return $hot;
 		//crear el post 
-		return View::make('chicahot.create');
+		return View::make('admin.chica.create');
 	}
 	public function store()
 	{
@@ -35,7 +35,7 @@ class ChicahotController extends \BaseController {
         $nuevo = array(
         	'titulo' => Input::get('titulo'),
         	'slug' => Input::get('slug'),
-        	'img' => Input::file("photo")
+        	'img' => Input::file("file")
         	);
 
         $validation = Validator::make($nuevo, $reglas, $messages);
@@ -44,7 +44,7 @@ class ChicahotController extends \BaseController {
         // en caso de que la validación falle vamos a retornar al formulario 
         // pero vamos a enviar los errores que devolvió Validator
         // y también los datos que el usuario escribió 
-        	return Redirect::to('chica/create')
+        	return Redirect::to('admin/chicahot/create')
                 // Aquí se esta devolviendo a la vista los errores 
                 ->withErrors($validation)
                 // Aquí se esta devolviendo a la vista todos los datos del formulario
@@ -52,7 +52,7 @@ class ChicahotController extends \BaseController {
     	}
     	else
     	{
-    		$file = Input::file("photo");
+    		$file = Input::file("file");
 			if (!empty($file))
 			{
 				//return "definida";
@@ -66,19 +66,17 @@ class ChicahotController extends \BaseController {
 
         	//'Datos Validos!';
         	$titulo = Input::get('titulo');
-			$user = Sentry::getUser();
-			$userId = $user->id;
 			//insertar Post
-			$users = User::find($userId);
 			$hot = new Chicahot;
 			$hot->img = $filename;
 			$hot->titulo = $titulo;
 			$hot->slugHot = str_replace(' ','-',$titulo);
+			$hot->save();
 			//$post->category()->name = $category;
 			//$post->slug = Input::get('url');
 
 			//insertar categoria
-			$users->chicahots()->save($hot);
+			//$users->chicahots()->save($hot);
 		
 			return Redirect::to('admin/chicahot');
     	}
