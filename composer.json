@@ -10,7 +10,10 @@
 		"nesbot/carbon": "~1.14",
 		"laravelrus/localized-carbon": "1.4*",
 		"enyo/dropzone": "dev-master",
-		"ceesvanegmond/minify": "2.0.13"
+		"ceesvanegmond/minify": "2.0.13",
+		"laravelrus/localized-carbon": "1.4",
+		"roumen/feed": "~2.8.2",
+		"vinicius73/seotools": "dev-master"
 		
 	},
 	"autoload": {

@@ -18,13 +18,12 @@ class HomeController extends BaseController {
 	public function showIndex()
 	{
 		$primera = Post::where('primeras', '=', 1)->orderBy('id', 'desc')->take(3)->get();
-
 		$chica = ChicaHot::remember(120)->orderBy('id', 'desc')->first();
 		$revista = Revista::remember(120)->orderBy('id', 'desc')->first();
 		//$chica = ChicaHot::orderBy('id', 'desc')->first();
 		//$date = Post::orderBy('id', 'desc')->select('updated_at')->first();
 		$post = Post::with('user','category','contenido','img')->orderBy('id', 'desc')->paginate(9);
-		return View::make('post.index', array('post'=>$post,'primera'=>$primera,'chica'=>$chica,'revista'=>$revista));
+		return View::make('post.index', compact('post','primera','chica','revista'));
 	}
 	
 	public function showDetail($id)
@@ -111,8 +110,8 @@ class HomeController extends BaseController {
 	public function showEdicion()
 	{
 		$chica = ChicaHot::orderBy('id', 'desc')->first();
-		$revista = Revista::orderBy('id', 'desc')->first();
-		$revistas = Revista::all();
+		$revista = Revista::with('hojas')->remember(120)->orderBy('id', 'desc')->first();
+		$revistas = Revista::with('hojas')->remember(120)->orderBy('id', 'desc')->take(5)->get();
 		return View::make('post.edicion',compact('revistas','chica','revista'));
 	}
 

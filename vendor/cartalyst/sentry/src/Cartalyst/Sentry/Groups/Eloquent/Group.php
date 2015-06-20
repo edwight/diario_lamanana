@@ -133,7 +133,7 @@ class Group extends Model implements GroupInterface {
 					$checkPermission = substr($permission, 0, -1);
 
 					// We will make sure that the merged permission does not
-					// exactly match our permission, but starts with it.
+					// exactly match our permission, but starts wtih it.
 					if ($checkPermission != $groupPermission and starts_with($groupPermission, $checkPermission) and $value == 1)
 					{
 						$matched = true;
@@ -155,7 +155,7 @@ class Group extends Model implements GroupInterface {
 					$checkPermission = substr($permission, 1);
 
 					// We will make sure that the merged permission does not
-					// exactly match our permission, but ends with it.
+					// exactly match our permission, but ends wtih it.
 					if ($checkPermission != $groupPermission and ends_with($groupPermission, $checkPermission) and $value == 1)
 					{
 						$matched = true;
@@ -210,8 +210,12 @@ class Group extends Model implements GroupInterface {
 			}
 		}
 
-		return $all;
-		
+		if ($all === false)
+		{
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -320,7 +324,7 @@ class Group extends Model implements GroupInterface {
 		// Merge permissions
 		$permissions = array_merge($this->getPermissions(), $permissions);
 
-		// Loop through and adjust permissions as needed
+		// Loop through and adjsut permissions as needed
 		foreach ($permissions as $permission => &$value)
 		{
 			// Lets make sure their is a valid permission value

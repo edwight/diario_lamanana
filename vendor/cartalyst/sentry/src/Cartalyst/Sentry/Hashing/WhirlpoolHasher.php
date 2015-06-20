@@ -18,7 +18,7 @@
  * @link       http://cartalyst.com
  */
 
-class WhirlpoolHasher extends BaseHasher implements HasherInterface {
+class WhirlpoolHasher implements HasherInterface {
 
 	/**
 	 * Salt Length
@@ -52,7 +52,19 @@ class WhirlpoolHasher extends BaseHasher implements HasherInterface {
 	{
 		$salt = substr($hashedString, 0, $this->saltLength);
 
-		return $this->slowEquals($salt.hash('whirlpool', $salt.$string), $hashedString);
+		return ($salt.hash('whirlpool', $salt.$string)) === $hashedString;
+	}
+
+	/**
+	 * Create a random string for a salt.
+	 *
+	 * @return string
+	 */
+	public function createSalt()
+	{
+		$pool = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+		return substr(str_shuffle(str_repeat($pool, 5)), 0, $this->saltLength);
 	}
 
 }

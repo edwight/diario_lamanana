@@ -163,7 +163,7 @@ interface UserInterface {
 	public function checkResetPasswordCode($resetCode);
 
 	/**
-	 * Attempts to reset a user's password by matching
+	 * Attemps to reset a user's password by matching
 	 * the reset code generated with the user's.
 	 *
 	 * @param  string  $resetCode
@@ -203,15 +203,6 @@ interface UserInterface {
 	 * @return bool
 	 */
 	public function removeGroup(GroupInterface $group);
-
-	/**
-	 * Updates the user to the given group(s).
-	 *
-	 * @param  \Illuminate\Database\Eloquent\Collection  $groups
-	 * @param  bool  $remove
-	 * @return bool
-	 */
-	public function updateGroups($groups, $remove = false);
 
 	/**
 	 * See if the user is in the given group.

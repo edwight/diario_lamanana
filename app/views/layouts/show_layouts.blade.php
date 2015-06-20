@@ -16,7 +16,7 @@
 					<a href="/categoria/{{$post->category->slugCategory}}"><p>{{$post->category->name}}</p></a>
 				</section>
 				<section class="fecha">
-					<p>{{ date("d F Y",strtotime($post->created_at)) }}</p>
+					<p>{{ $post->getCarbonDate($post->created_at) }}</p>
 				</section>
 				<section class="subtitulo">
 						<p class="subtitulo">{{$post->contenido->subtitulo}}</p>

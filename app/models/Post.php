@@ -39,15 +39,16 @@ class Post extends Eloquent {
         //$this->getCarbonDay = \Carbon\Carbon::createFromTimeStamp(strtotime($date))->diffForHumans();
         //return $this->getCarbonDay;
     }
-    public function getCarbonMinute($date)
+    public function getCarbonDate($date)
     {
-        //return Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('H');
+         $this->getCarbonDate = LocalizedCarbon::instance($date)->format('d F Y');
+        return $this->getCarbonDate;
     }
 
     public function getCarbonAgo($date)
     {
-        setlocale(LC_TIME, 'es_ES.UTF-8');
-        $this->getCarbonAgo = \Carbon\Carbon::createFromTimeStamp(strtotime($date))->diffForHumans();
+        //$this->getCarbonAgo = \Carbon\Carbon::createFromTimeStamp(strtotime($date))->diffForHumans();
+        $this->getCarbonAgo = LocalizedCarbon::instance($date)->diffForHumans();
         return $this->getCarbonAgo;
         //return Carbon\Carbon::now()->subDays($this->getCarbonDay($date))->diffForHumans();
 

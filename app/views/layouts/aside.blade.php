@@ -6,7 +6,7 @@
 				</section>
 				<section class="list--col2">
 					<figure class="chica" style="margin:10px 5px; height: 270px;">
-						<a href="http://localhost:8000/edicion"><img style="width:100%; height:270px;" alt="" src="{{ Image::path('/imgs/revista/'.$revista->titulo.'/'.$revista->hojas->first()->titulo, 'resize', 276, 184) }}"/></a>
+						<a href="http://localhost:8000/edicion"><img style="width:100%; height:270px;" alt="" src="#"/></a>
 					</figure>	
  				</section>
 				<section class="list--col3">

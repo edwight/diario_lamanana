@@ -113,7 +113,6 @@ function loadApp() {
 
 			missing: function (event, pages, edition) {
 				var edition = '{{ URL::asset("imgs/revista/$revista->titulo"); }}';
-
 				// Add pages that aren't in the magazine
 
 				for (var i = 0; i < pages.length; i++)
@@ -147,7 +146,7 @@ function loadApp() {
 			},
 
 			resize: function(event, scale, page, pageElement) {
-				 var edition = '{{ URL::asset("imgs/revista/$revista->titulo"); }}';
+				var edition = '{{ URL::asset("imgs/revista/$revista->titulo"); }}';
 				if (scale==1)
 					loadSmallPage(page, pageElement, edition);
 				else

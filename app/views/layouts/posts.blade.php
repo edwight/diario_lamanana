@@ -1,7 +1,7 @@
 @if($posts->contenido->descripcion && $posts->img && $posts->contenido->subtitulo)
 			<article id="box" class="article--first"><!--  si -->
 					<figure class="fimg--first">
-						<img alt="" src="{{ Image::path('/imgs/post/'.$posts->img->imagen, 'resize', 458, 150) }}" />
+						<img alt="" src="{{ Image::path('/imgs/post/'.$posts->img->imagen, 'resizeCrop', 458, 150) }}" />
 					</figure>
 					<div class="author">
 						<a href="{{'/editor/'.$posts->user->id.'/'.$posts->user->slugUser}}">{{$posts->user->name}}</a>
@@ -21,7 +21,7 @@
 		@elseif($posts->img)
 			<article id="box" class="article"><!--  si -->
 				<figure class="fimg">
-					<img alt="" src="{{ Image::path('/imgs/post/'.$posts->img->imagen, 'resize', 178, 120) }}" />
+					<img alt="" src="{{ Image::path('/imgs/post/'.$posts->img->imagen, 'resizeCrop', 178, 120) }}" />
 				</figure>
 				<div class="author">
 					<a href="{{'/editor/'.$posts->user->id.'/'.$posts->user->slugUser}}">{{$posts->user->name}}</a>

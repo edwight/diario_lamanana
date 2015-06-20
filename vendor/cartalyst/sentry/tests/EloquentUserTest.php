@@ -110,11 +110,9 @@ class EloquentUserTest extends PHPUnit_Framework_TestCase {
 		$relationship = m::mock('StdClass');
 		$relationship->shouldReceive('attach')->with($group)->once();
 
-		$user  = m::mock('Cartalyst\Sentry\Users\Eloquent\User[inGroup,groups,invalidateMergedPermissionsCache,invalidateUserGroupsCache]');
+		$user  = m::mock('Cartalyst\Sentry\Users\Eloquent\User[inGroup,groups]');
 		$user->shouldReceive('inGroup')->once()->andReturn(false);
 		$user->shouldReceive('groups')->once()->andReturn($relationship);
-		$user->shouldReceive('invalidateUserGroupsCache')->once();
-		$user->shouldReceive('invalidateMergedPermissionsCache')->once();
 
 		$this->assertTrue($user->addGroup($group));
 	}
@@ -126,60 +124,11 @@ class EloquentUserTest extends PHPUnit_Framework_TestCase {
 		$relationship = m::mock('StdClass');
 		$relationship->shouldReceive('detach')->with($group)->once();
 
-		$user  = m::mock('Cartalyst\Sentry\Users\Eloquent\User[inGroup,groups,invalidateMergedPermissionsCache,invalidateUserGroupsCache]');
+		$user  = m::mock('Cartalyst\Sentry\Users\Eloquent\User[inGroup,groups]');
 		$user->shouldReceive('inGroup')->once()->andReturn(true);
 		$user->shouldReceive('groups')->once()->andReturn($relationship);
-		$user->shouldReceive('invalidateUserGroupsCache')->once();
-		$user->shouldReceive('invalidateMergedPermissionsCache')->once();
 
 		$this->assertTrue($user->removeGroup($group));
-	}
-
-	public function testUpdateGroupWithOneId()
-	{
-		$group = m::mock('Cartalyst\Sentry\Groups\GroupInterface');
-		$user  = m::mock('Cartalyst\Sentry\Users\Eloquent\User[addGroup]');
-
-		$user->shouldReceive('addGroup')->once()->andReturn(true);
-		$this->assertTrue($user->addGroup($group));
-	}
-
-	public function testUpdateGroupWithMultipleIds()
-	{
-		$group = m::mock('Cartalyst\Sentry\Groups\GroupInterface');
-		$user  = m::mock('Cartalyst\Sentry\Users\Eloquent\User[addGroup]');
-
-		$user->shouldReceive('addGroup')->times(3)->andReturn(true);
-
-		for ($i = 0; $i < 3; $i++)
-		{
-			$this->assertTrue($user->addGroup($group));
-		}
-	}
-
-	public function testUpdateGroupWithOneIdToRemove()
-	{
-		$user  = m::mock('Cartalyst\Sentry\Users\Eloquent\User[removeGroup]');
-		$groupProvider = m::mock('Cartalyst\Sentry\Groups\Eloquent\Provider[findById]');
-		$groupProvider->shouldReceive('findById')->once()->with(\Mockery::type('int'))->andReturn($group = m::mock('Cartalyst\Sentry\Groups\GroupInterface'));
-		$user->shouldReceive('removeGroup')->andReturn(true);
-
-		$this->assertTrue($user->removeGroup($groupProvider->findById(1)));
-
-	}
-
-	public function testUpdateGroupWithMultipleIdsToRemove()
-	{
-		$count = 3;
-		$user  = m::mock('Cartalyst\Sentry\Users\Eloquent\User[removeGroup]');
-		$groupProvider = m::mock('Cartalyst\Sentry\Groups\Eloquent\Provider[findById]');
-		$groupProvider->shouldReceive('findById')->times($count)->with(\Mockery::type('int'))->andReturn($group = m::mock('Cartalyst\Sentry\Groups\GroupInterface'));
-		$user->shouldReceive('removeGroup')->times($count)->andReturn(true);
-
-		for ($i = 0; $i < $count; $i++)
-		{
-			$this->assertTrue($user->removeGroup($groupProvider->findById($i)));
-		}
 	}
 
 	public function testMergedPermissions()
@@ -523,6 +472,7 @@ class EloquentUserTest extends PHPUnit_Framework_TestCase {
 		// Check the hash
 		$this->assertTrue($user->checkPersistCode('hashed_reset_code'));
 		$this->assertFalse($user->checkPersistCode('not_the_codeed_reset_code'));
+		$this->assertFalse($user->checkPersistCode(true));
 	}
 
 	public function testGetActivationCode()

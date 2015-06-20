@@ -6,11 +6,11 @@
 		<div id="slideshow">
         <ul>
         @foreach($primera as $primeras)
-		@if($primeras->img)
-          <li>  
-          	<a href="{{'/'.$primeras->id.'/'.$primeras->slugPost }}"><img src="{{ Image::path('/imgs/post/'.$primeras->img->imagen, 'resize', 602, 400) }}" alt="" title="{{$primeras->titulo}}"/></a>      
-          </li>
-        @endif
+			@if($primeras->img)
+	          <li>  
+	          	<a href="{{'/'.$primeras->id.'/'.$primeras->slugPost }}"><img src="{{ Image::path('/imgs/post/'.$primeras->img->imagen, 'resizeCrop', 602, 400) }}" alt="" title="{{$primeras->titulo}}"/></a>      
+	          </li>
+	        @endif
 		@endforeach                        
         </ul>
 		</div>   <!-- end carrusel -->
@@ -29,7 +29,7 @@
     
 @stop
 
-@section('script')
+@section('script_index')
 
 
     <!-- 

@@ -1,0 +1,19 @@
+{
+    "providers": [
+        "Vinicius73\SEO\Providers\SEOServiceProvider"
+    ],
+    "aliases": [
+        {
+            "alias": "SEO\Meta",
+            "facade": "Vinicius73\SEO\Facades\Meta"
+        },
+        {
+            "alias": "SEO\Sitemap",
+            "facade": "Vinicius73\SEO\Facades\Sitemap"
+        },
+        {
+            "alias": "SEO\OpenGraph",
+            "facade": "Vinicius73\SEO\Facades\OpenGraph"
+        }
+    ]
+}

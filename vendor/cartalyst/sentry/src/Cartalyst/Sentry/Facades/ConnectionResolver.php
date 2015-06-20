@@ -116,33 +116,33 @@ class ConnectionResolver implements ConnectionResolverInterface {
 	{
 		if ($this->connection === null)
 		{
-			$connection = null;
+			$this->connection = new Connection($this->pdo, '', $this->tablePrefix);
 
 			// We will now provide the query grammar to the connection.
 			switch ($this->driverName)
 			{
 				case 'mysql':
-					$connection = '\Illuminate\Database\MySqlConnection';
+					$queryGrammar = 'Illuminate\Database\Query\Grammars\MySqlGrammar';
 					break;
 
 				case 'pgsql':
-					$connection = '\Illuminate\Database\PostgresConnection';
+					$queryGrammar = 'Illuminate\Database\Query\Grammars\PostgresGrammar';
 					break;
 
 				case 'sqlsrv':
-					$connection = '\Illuminate\Database\SqlServerConnection';
+					$queryGrammar = 'Illuminate\Database\Query\Grammars\SqlServerGrammar';
 					break;
 
 				case 'sqlite':
-					$connection = '\Illuminate\Database\SQLiteConnection';
+					$queryGrammar = 'Illuminate\Database\Query\Grammars\SQLiteGrammar';
 					break;
 
 				default:
 					throw new \InvalidArgumentException("Cannot determine grammar to use based on {$this->driverName}.");
 					break;
 			}
-			
-			$this->connection = new $connection($this->pdo, '', $this->tablePrefix);
+
+			$this->connection->setQueryGrammar(new $queryGrammar);
 		}
 
 		return $this->connection;

@@ -1,0 +1,34 @@
+{
+    "name": "roumen/feed",
+    "description": "A simple feed generator for Laravel.",
+    "homepage": "https://roumen.it/projects/laravel-feed",
+    "keywords": ["laravel", "feed"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Roumen Damianoff",
+            "email": "roumen@dawebs.com",
+            "role": "Developer",
+            "homepage": "https://roumen.it"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "~4|~5"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*",
+        "orchestra/testbench": "2.2.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Roumen\\Feed": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.8-dev"
+        }
+    },
+    "minimum-stability": "stable"
+}

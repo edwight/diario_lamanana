@@ -125,6 +125,8 @@ return array(
 		'CeesVanEgmond\Minify\MinifyServiceProvider',
 		'KevBaldwyn\Image\Providers\Laravel\ImageServiceProvider',
 
+		'Laravelrus\LocalizedCarbon\LocalizedCarbonServiceProvider',
+
 
 	),
 
@@ -197,6 +199,9 @@ return array(
 		'Image' 		  => 'KevBaldwyn\Image\Providers\Laravel\Facades\Image',
 
 		'Carbon'          => 'Carbon\Carbon',
+
+		'LocalizedCarbon'   => 'Laravelrus\LocalizedCarbon\LocalizedCarbon',
+		'DiffFormatter'     => 'Laravelrus\LocalizedCarbon\DiffFactoryFacade',
 
 	),
 

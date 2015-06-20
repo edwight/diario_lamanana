@@ -296,7 +296,7 @@ class Group extends \ORM implements GroupInterface {
 		// Merge permissions
 		$permissions = array_merge($this->getPermissions(), $permissions);
 
-		// Loop through and adjust permissions as needed
+		// Loop through and adjsut permissions as needed
 		foreach ($permissions as $permission => &$value)
 		{
 			// Lets make sure their is a valid permission value
@@ -358,7 +358,7 @@ class Group extends \ORM implements GroupInterface {
 			->from($this->_table_name)
 			->where($field, '=', $value)
 			->where($this->_primary_key, '!=', $this->pk())
-			->execute($this->_db)
+			->execute()
 			->get('total_count');
 
 		return ($total == 0);

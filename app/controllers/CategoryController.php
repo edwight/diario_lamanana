@@ -34,7 +34,7 @@ class CategoryController extends \BaseController {
 	public function store()
 	{
 		//procesar el post 
-		$category = Input::get('category');
+		$category = Input::get('categoria');
 		$categorys = new Category;
 		$categorys->name = $category;
 		//$categorys->slugCategory = str_replace(' ','-',$category);

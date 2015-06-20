@@ -5,6 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes"> 
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
     {{ Minify::stylesheet('/css/style.css') }}
+    @yield('style_index')
 	</head>
 	<body>
     <header class="header-main" id="header">
@@ -30,7 +31,6 @@
       </a>
       <form id="demo-2">
     <input class="sb-icon-search" type="search" placeholder="Search">
-    <span class="sb-icon-search"></span>
     </form>
     </div>
         <div id="headermain">
@@ -62,28 +62,11 @@
             </div>
           </div>
     </ul>
-    <div class="acerca">
-      <p></p>
-      <p>Estamos Ubicados en:</p>
-      <p>
-      <strong>Coro:</strong>  Calle Zamora 64-1
-      <strong> Punto Fijo:</strong> Calle Libertad esquina AV. Mexico
-      </p>
-      <p>Contacto de Aviso: </p>
-      <p>
-      <strong>avisoscoro@hotmail.com</strong>, <strong>avisoscoro@gmail.com</strong>
-      </p>
-      <p>
-         <strong>Coro:</strong>   +(58) 0268 251.86.67  <strong>Punto Fijo</strong>   +(58) 069 246.85.16  
-      </p>
-        La mañana © - by-nc-sa (cc) {{date('Y')}}. Algunos derechos reservados. El contenido de este sitio está licenciado bajo CreativeCommons.
-      </p>
-    </div>
   </nav>
 		@yield('index')
 		@yield('show')
     @yield('edicion')
-
+    @include('layouts.footer')
     <!--
 		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     -->
@@ -120,9 +103,8 @@
 
     {{ Minify::javascript(array('/js/masonry.min.js','/js/modernizr.custom.js','/js/craftyslide.min.js'), array('charset' => 'utf-8')) }}
 
-    @yield('script')
+    @yield('script_index')
     
-    @yield('show_js')
  
  
     <script src="https://platform.twitter.com/widgets.js" id="twitter-wjs" charset="utf-8" async=""></script>
