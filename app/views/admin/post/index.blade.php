@@ -5,22 +5,6 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">Post index 
-				
-				<!-- Single button -->
-				<div class="btn-group">
-  					<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-    					Action <span class="caret"></span>
-  					</button>
-  					<ul class="dropdown-menu" role="menu">
-					    <li style="list-style:none;"><a href="#">Nuevo</a></li>
-					    <li style="list-style:none;"><a href="#">lista</a></li>
-					    <li style="list-style:none;"><a href="#">Something else here</a></li>
-					    <li style="list-style:none;" class="divider"></li>
-					    <li style="list-style:none;"><a href="#">Separated link</a></li>
-  					</ul>
-				</div>
-                </div><!-- end panel heading -->
                 <div class="panel-body">
                     @if (count($errors) > 0)
                         <div class="alert alert-danger">
@@ -32,23 +16,50 @@
                             </ul>
                         </div>
                     @endif
-					<div class="contenedor">
-						<section class="section-main--col1">
-							<div class="central-articulo">
-							@foreach($post as $posts)
-								@include('layouts.posts', ['posts'=>$posts])
-							@endforeach	
-	            <div class="paginate text-center">
-	                {{ $post->links() }}
-	            </div>
-        	</div>
-    	</div>
+
+
+
+
+<div class="form-group">
+                        <div class="col-md-6">
+                            <a href="/admin/posts/create"><button type="button" class="btn btn-primary">Nuevo Post</button></a>
+                        </div>
+                    </div>
+                    <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>#</th>
+                          <th>Nombre</th>
+                          <th>Correo</th>
+                          <th>Tipo</th>
+                          <th>Acciones</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                       @foreach($post as $posts)
+                        <tr>
+                          <th scope="row">{{ $posts->id}}</th>
+                          <td>{{ $posts->titulo}}</td>
+                          <td>{{ $posts->category->name}}</td>
+                           <td>{{ $posts->getCarbonAgo($posts->created_at) }}</td>
+                          <td><a href="{{ URL::to('admin/posts/'.$posts->id. '/edit') }}">
+                          <button type="button" class="btn btn-primary">Editar</button></a>
+                          | {{ Form::open(['url'=>'admin/posts/'.$posts->id]) }}
+                            {{ Form::hidden('_method', 'DELETE') }}
+                            {{ Form::submit('Eliminar', ['class' => 'btn btn-danger']) }}
+                            {{ Form::close() }}</td>
+                        </tr>
+                     @endforeach
+                        
+                    </table> 
+                    {{ $post->links() }}
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-        
 @stop
 
-@section('style')
-<link href="{{ asset('/css/style.css') }}" rel="stylesheet">
-@stop
+
+
 

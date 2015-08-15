@@ -3,7 +3,7 @@
 			<div class="footer-left">
 
 				<div class="footer-logo"></div>
-
+				<!--
 				<p class="footer-links">
 					<a href="#">Home</a>
 					·
@@ -17,7 +17,7 @@
 					·
 					<a href="#">Contact</a>
 				</p>
-
+				-->
 				<p class="footer-company-name">La mañana © - by-nc-sa (cc) 2015. Algunos derechos reservados. El contenido de este sitio está licenciado bajo CreativeCommons.</p>
 			</div>
 
@@ -26,12 +26,12 @@
 				<div>
 					<i class="fa fa-map-marker"></i>
 					 
-					<p><span>Coro: Calle Zamora 64-1</span>Punto Fijo: Calle Libertad esquina AV. Mexico</p>
+					<p><span>Coro: Calle Zamora Casa N° 64-1</span>Punto Fijo: Calle Libertad esquina AV. Mexico</p>
 				</div>
 
 				<div>
 					<i class="fa fa-phone"></i>
-					<p><span>Coro: +(58) 0268 251.86.67</span> Punto Fijo +(58) 069 246.85.16</p>
+					<p><span>Coro: +(58) 0268 251.86.67</span> Punto Fijo +(58) 0269 246.85.16</p>
 				</div>
 
 				<div>
@@ -45,8 +45,8 @@
 			<div class="footer-right">
 
 				<p class="footer-company-about">
-					<span>About the company</span>
-					Lorem ipsum dolor sit amet, consectateur adispicing elit. Fusce euismod convallis velit, eu auctor lacus vehicula sit amet.
+					<span>Acerca de la Compañia</span>
+					Fundado el 15 de Marzo de 1952 Afiliado al Bloque de Presa Venezolano, a la Cámara Venezolana de prensa Regional y a la Cámara de Periódicos de Venezuela
 				</p>
 
 				<div class="footer-icons">

@@ -1,6 +1,6 @@
 <?php
 
-class RevistaController extends \BaseController {
+class EdicionController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -33,22 +33,23 @@ class RevistaController extends \BaseController {
 	public function store()
 	{
 		$file = Input::file('file');
-		$time = date("Y-m-d", time());
-		$fileName = $file->getClientOriginalName();
-		$path = 'public/imgs/revista/'.$time;
+		$editionName = Input::get('editionName');
+
+		$path = 'public/imgs/revista/'.$editionName;
 		
 		if (!file_exists($path)){
 			mkdir($path, 0777, true);
 			$revistas = New Revista;
-			$revistas->titulo = $time;
+			$revistas->titulo = $editionName;
 			$revistas->save();	
+
 			$hoja = New Hoja;
         	$hoja->titulo = $fileName;
-        	$revista = Revista::where('titulo',$time)->orderBy('id', 'desc')->first();
+        	$revista = Revista::where('titulo',$editionName)->orderBy('id', 'desc')->first();
         	$revista->hojas()->save($hoja);
 
-			
-            $file->move('public/imgs/revista/'.$time, $fileName); 
+			$fileName = $file->getClientOriginalName();
+            $file->move($path, $fileName); 
         	
         	
         	return Response::json('success', 200);
@@ -57,11 +58,11 @@ class RevistaController extends \BaseController {
 		{	
 			$hoja = New Hoja;
         	$hoja->titulo = $fileName;
-        	$revista = Revista::where('titulo', $time)->orderBy('id', 'desc')->first();
+        	$revista = Revista::where('titulo', $editionName)->orderBy('id', 'desc')->first();
         	$revista->hojas()->save($hoja);
 
 			$fileName = $file->getClientOriginalName();
-        	$file->move('public/imgs/revista/'.$time, $fileName);
+        	$file->move($path, $fileName);
         	
         	return Response::json('success', 200);
         	//$revista->hojas()->save($hoja);

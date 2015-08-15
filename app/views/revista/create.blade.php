@@ -16,9 +16,8 @@
 </head>
 <body>
 
-{{ Form::open(array('action' => array('RevistaController@store' ),'files'=>true, 'method' => 'POST', 'data-ajax' => 'true', 'class' => 'dropzone', 'id' => 'my-awesome-dropzone'))}}
-
-	
+{{ Form::open(array('action' => array('RevistaController@store' ),'files'=>true, 'method' => 'POST', 'data-ajax' => 'true'))}}
+	<div "class" = 'dropzone', 'id' = 'my-awesome-dropzone'></div>
     {{-- More fields... --}}
     
 

@@ -10,9 +10,6 @@
 		</aside>
 </div><!-- end contenedor -->
 		
-			
-		
-		
  
 <script src="https://platform.twitter.com/widgets.js" id="twitter-wjs" charset="utf-8" async=""></script>
 

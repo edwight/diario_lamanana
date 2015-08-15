@@ -1,15 +1,22 @@
 @extends('layouts.master')
 
+@section('head')
+	{{SEOMeta::generate()}}
+	{{OpenGraph::generate()}}
+@stop
+
 @section('style_index')
 <style type="text/css">
     .publicidad_1{
-      width: 150px;
-      height: 700px;
-      background-image: url("{{ asset('/imgs/publicidad/publicidad.gif') }}");
-      background-size: 100% 100%;
-      position: absolute;
-      top: 40px;
-      left: 15px;
+
+    	width: 180px;
+      	height: 700px;
+      	 background-image: url("{{asset('/imgs/publicidad/diario.png') }}");
+      	background-size: 100% 100%; 
+      	/*background-color: #ccc; */
+      	position: absolute;
+      	top: 380px;
+      	left: 15px;
 
     }
     .publicidad_2{

@@ -74,7 +74,7 @@ class AdminController extends \BaseController {
         // en caso de que la validación falle vamos a retornar al formulario 
         // pero vamos a enviar los errores que devolvió Validator
         // y también los datos que el usuario escribió 
-        	return Redirect::to('admin/create')
+        	return Redirect::to('admin/posts/create')
                 // Aquí se esta devolviendo a la vista los errores 
                 ->withErrors($validation)
                 // Aquí se esta devolviendo a la vista todos los datos del formulario
@@ -196,7 +196,120 @@ class AdminController extends \BaseController {
 	 */
 	public function update($id)
 	{
+		$reglas =  array
+		(
+			'editor' => 'required',
+	        'titulo'  => 'required', 
+	        'categorys'  => 'required',
+	            // validamos que el nombre sea un campo obligatorio 
+	        'contenido' => array('required', 'min:8'), 
+	            // validamos que el usuario sea un campo obligatorio y de mínimo 8 caracteres
+	        'imagen'  => array('unique:imgs'),
+	            // validemos que el correo sea un campo obligatorio y con formato de email
+    	);
+    	$messages = array(
+            'required' => 'El campo :attribute es obligatorio.',
+            'min' => 'El campo :attribute no puede tener menos de :min carácteres.',
+            'email' => 'El campo :attribute debe ser un email válido.',
+            'max' => 'El campo :attribute no puede tener más de :max carácteres.',
+            'unique' => 'El la imagen ingresada ya existe en la base de datos'
+        );
+        $nuevo = array(
+        	'editor' => Input::get('editor'),
+        	'categorys' => Input::get('categorys'),
+        	'titulo' => Input::get('titulo'),
+        	'contenido' => Input::get('contenido'),
+        	'primeras' => Input::get('primeras'),
+        	'imagen' => Input::file("imagen")
+        	);
+
+        $validation = Validator::make($nuevo, $reglas, $messages);
+		if ( $validation->fails())
+		{
+        // en caso de que la validación falle vamos a retornar al formulario 
+        // pero vamos a enviar los errores que devolvió Validator
+        // y también los datos que el usuario escribió 
+        	return Redirect::to('admin/posts/create')
+                // Aquí se esta devolviendo a la vista los errores 
+                ->withErrors($validation)
+                // Aquí se esta devolviendo a la vista todos los datos del formulario
+                ->withInput();
+    	}
+    	else
+    	{
+
+        	
+			//$user = Sentry::getUser();
+			//$userId = $user->id;
+			//insertar Post
+			$primeras = Input::get('primeras');
+			$post = Post::find($id);
+			$titulo = Input::get('titulo');
+			$post->titulo = $titulo;
+			$post->slugPost = Str::slug($titulo);
+			$post->primeras = $primeras;
+			$post->save();
+			
+			$contenido = Contenido::where('post_id','=', $id)->first();
+			//$contenido = New Contenido();
+			$contenido->subtitulo = Input::get('subtitulo');
+			$contenido->contenido = Input::get('contenido');
+			$contenido->descripcion = Input::get('descripcion');
+			$post->contenido()->save($contenido);
+
+			//$post->category()->name = $category;
+			//$post->slug = Input::get('url');
+			
 		
+			$editor = Input::get('editor');
+			$users = User::find($editor);
+			$users->post()->save($post);
+			//insertar categoria
+			$category = Input::get('categorys');
+			$categorys = Category::find($category);
+			$categorys->posts()->save($post);
+			
+
+			/*if (isset($category)) {
+				
+					$categorys = Category::find($category);
+					$post->categorys()->save($categorys);
+				
+			} */
+			//insertar tags
+
+			$tag=Input::get('tags');
+			if (isset($tag)) 
+			{
+				foreach ($tag as $tagId) 
+				{
+					$tags = Tag::find($tagId);
+					$post->tags()->attach($tags);
+				}
+			}
+			$file = Input::file("imagen");
+	
+			if (!empty($file))
+			{
+				//return "definida";
+				$date = time();
+				$fileName = $date. '_' . $file->getClientOriginalName();
+				$extension = File::extension($fileName);
+				$filename = Str::slug($fileName);
+				$filename = $filename.'.'.$extension;
+				//return $fileSize = $filename->getClientSize();
+				//$start_day = date("d-m-Y", strtotime($start_day_old));
+				//$filename = $file->getClientOriginalName();
+				$file->move('public/imgs/post', $filename);
+
+				$Imgfile = Img::where('post_id','=', $id)->first();
+				$Imgfile->imagen = $filename;
+				$post->img()->save($Imgfile);
+
+			}
+		
+			return Redirect::to('admin/posts');
+    	}
 
 	}
 
@@ -210,6 +323,8 @@ class AdminController extends \BaseController {
 	public function destroy($id)
 	{
 		//eliminar un post 
+		Post::destroy($id);
+		return Redirect::to('admin/Posts');
 	}
 
 }

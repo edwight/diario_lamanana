@@ -126,8 +126,10 @@ return array(
 		'KevBaldwyn\Image\Providers\Laravel\ImageServiceProvider',
 
 		'Laravelrus\LocalizedCarbon\LocalizedCarbonServiceProvider',
-
-
+		// Service provider
+		'Vinicius73\SEO\Providers\SEOServiceProvider',
+		//Feed
+		'Roumen\Feed\FeedServiceProvider',
 	),
 
 	/*
@@ -202,6 +204,13 @@ return array(
 
 		'LocalizedCarbon'   => 'Laravelrus\LocalizedCarbon\LocalizedCarbon',
 		'DiffFormatter'     => 'Laravelrus\LocalizedCarbon\DiffFactoryFacade',
+
+		// Facades (can customize if preferred)
+		'SEOMeta'     		=> 'Vinicius73\SEO\Facades\Meta',
+		'SEOSitemap'  		=> 'Vinicius73\SEO\Facades\Sitemap',
+		'OpenGraph'  		=> 'Vinicius73\SEO\Facades\OpenGraphHelper',
+
+		'Feed'				=> 'Roumen\Feed\Facades\Feed',
 
 	),
 

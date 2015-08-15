@@ -18,7 +18,8 @@
         
 @stop
 
-@section('script')
+@section('script_index')
+
     <script type="text/javascript">
     	$(document).ready(function(){
 			$('.section-main--col1 .central-articulo').masonry();

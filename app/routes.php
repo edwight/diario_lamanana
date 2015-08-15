@@ -34,10 +34,14 @@ Route::post('/Busqueda','BusquedaController@postBusqueda');
 Route::group(['before' => 'auth', 'AuthController@showLogin'], function()
 {
 	//Route::controller('users', 'UserController');
-	
+
+	Route::get('admin',function(){
+		return View::make('admin.index');
+	});
 	Route::resource('admin/users', 'UserController');
 	Route::resource('admin/posts', 'AdminController');
 	Route::resource('admin/edicion','RevistaController');
+	//Route::resource('admin/anuncios','AnuncioController');
 	Route::resource('admin/tags', 'TagsController');
 	Route::resource('admin/category', 'CategoryController');
 	Route::resource('admin/chicahot', 'ChicahotController');

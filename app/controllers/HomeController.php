@@ -22,14 +22,28 @@ class HomeController extends BaseController {
 		$revista = Revista::remember(120)->orderBy('id', 'desc')->first();
 		//$chica = ChicaHot::orderBy('id', 'desc')->first();
 		//$date = Post::orderBy('id', 'desc')->select('updated_at')->first();
-		$post = Post::with('user','category','contenido','img')->orderBy('id', 'desc')->paginate(9);
+		$post = Post::with('user','category','contenido','img')->orderBy('id', 'desc')->paginate(12);
 		return View::make('post.index', compact('post','primera','chica','revista'));
 	}
 	
 	public function showDetail($id)
 	{
+
 		//detalles del usuario 
 		$post = Post::with('contenido','category','img')->find($id);
+
+		SEOMeta::setTitle($post->titulo);
+        //SEOMeta::setDescription($post->resume);
+        SEOMeta::addMeta('article:published_time', $post->created_at->toW3CString(), 'property');
+        SEOMeta::addMeta('article:section', $post->category->name, 'property');
+        // Vinicius73\SEO\Generators\MetaGenerator::addMeta($meta, $value, $name);
+        SEOMeta::setKeywords($post->tags);
+        // Vinicius73\SEO\Generators\MetaGenerator::setKeywords(['key1','key2','key3']);
+        // Vinicius73\SEO\Generators\MetaGenerator::setKeywords('key1, key2, key3');
+
+
+
+
 		//return $post->tags->lists('id');
 		//return View::make('post.show')->with('post', $post);
 		$tag_ids = $post->tags->lists('id');
@@ -60,7 +74,7 @@ class HomeController extends BaseController {
 	{
 		$category = category::where('name', '=', $slug)->first();  	
     	if($category){
-    		$categorys = $category->posts()->paginate(5);
+    		$categorys = $category->posts()->paginate(12);
     		$chica = ChicaHot::orderBy('id', 'desc')->first();
 			$revista = Revista::orderBy('id', 'desc')->first();
     		return View::make('post.category', array('categorys' => $categorys, 'chica' =>$chica, 'revista' =>$revista));
@@ -78,7 +92,7 @@ class HomeController extends BaseController {
 		
 		//return $user;
 		if($users){
-			$user = $users->post()->paginate(5);
+			$user = $users->post()->paginate(12);
 			$chica = ChicaHot::orderBy('id', 'desc')->first();
 			$revista = Revista::orderBy('id', 'desc')->first();
 	    	return View::make('post.user',array('user'=>$user,'chica'=>$chica,'revista'=>$revista));
@@ -98,7 +112,7 @@ class HomeController extends BaseController {
 		$revista = Revista::orderBy('id', 'desc')->first();
 	
     	if($tags){	
-    		$tag= $tags->posts()->paginate(5);
+    		$tag= $tags->posts()->paginate(12);
     		return View::make('tags.index', array('tag' => $tag, 'chica' => $chica, 'revista' => $revista));
     	}
 		else{
@@ -110,8 +124,10 @@ class HomeController extends BaseController {
 	public function showEdicion()
 	{
 		$chica = ChicaHot::orderBy('id', 'desc')->first();
-		$revista = Revista::with('hojas')->remember(120)->orderBy('id', 'desc')->first();
-		$revistas = Revista::with('hojas')->remember(120)->orderBy('id', 'desc')->take(5)->get();
+		$revista = Revista::with('hojas')->orderBy('id', 'desc')->first();
+		$revistas = Revista::with('hojas')->orderBy('id', 'desc')->take(5)->get();
+		//$revistas = Revista::with('hojas')->remember(120)->orderBy('id', 'desc')->take(5)->get();
+		//dd($revista);
 		return View::make('post.edicion',compact('revistas','chica','revista'));
 	}
 

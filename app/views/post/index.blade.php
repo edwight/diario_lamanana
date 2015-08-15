@@ -1,5 +1,10 @@
 @extends('layouts.master')
- 
+
+@section('head')
+	{{SEOMeta::generate()}}
+	{{OpenGraph::generate()}}
+@stop
+
 @section('index')
 <div class="contenedor">
 	<section class="section-main--col1">
